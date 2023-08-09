@@ -7,9 +7,10 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import useBitfinexWebSocket from '../hooks/useBitfinexWebSocket'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
-  const cryptoData = useBitfinexWebSocket()
+  const { cryptoData } = useBitfinexWebSocket()
   console.log(cryptoData)
 
   return (
@@ -26,16 +27,18 @@ const Home = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {cryptoData.map((row) => (
+          {Object.values(cryptoData).map((row) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
+              <Link className="link" to={`Details/${row.name}`}>
                 {row.name}
+              </Link>
               </TableCell>
-              <TableCell align="right">{row.last}</TableCell>
-              <TableCell align="right">{row.change}</TableCell>
-              <TableCell align="right">{row.changePercent}</TableCell>
-              <TableCell align="right">{row.high}</TableCell>
-              <TableCell align="right">{row.low}</TableCell>
+              <TableCell align="right">{row.LAST_PRICE}</TableCell>
+              <TableCell align="right">{row.DAILY_CHANGE}</TableCell>
+              <TableCell align="right">{row.DAILY_CHANGE_RELATIVE.toFixed(2)}%</TableCell>
+              <TableCell align="right">{row.HIGH}</TableCell>
+              <TableCell align="right">{row.LOW}</TableCell>
             </TableRow>
           ))}
         </TableBody>
