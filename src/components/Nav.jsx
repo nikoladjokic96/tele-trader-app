@@ -1,15 +1,21 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import React from 'react'
+import SnackBar from './SnackBar'
 
 const Nav = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [hasCheckedToken, setHasCheckedToken] = useState(false)
+  const [showSnackbar, setShowSnackbar] = useState(false)
 
   const handleLogin = () => {
     if (!isLoggedIn) {
       window.localStorage.setItem('login_token', true)
       setIsLoggedIn(true)
+      setShowSnackbar(true)
+      setTimeout(() => {
+        setShowSnackbar(false)
+      }, 3000)
     }
   }
 
@@ -38,6 +44,7 @@ const Nav = () => {
           Log in
         </button>
       )}
+      {isLoggedIn && showSnackbar && <SnackBar />}{' '}
     </nav>
   )
 }

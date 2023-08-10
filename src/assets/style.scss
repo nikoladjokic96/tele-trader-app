@@ -28,13 +28,7 @@ nav {
   color: #5e5df0;
   text-decoration: none;
   cursor: pointer;
-  font-family: Inter, Helvetica, 'Apple Color Emoji', 'Segoe UI Emoji',
-    NotoColorEmoji, 'Noto Color Emoji', 'Segoe UI Symbol', 'Android Emoji',
-    EmojiSymbols, -apple-system, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue',
-    'Noto Sans', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 24px;
+  @include font;
 
   &:hover {
     transition: 0.3s;
@@ -50,13 +44,7 @@ nav {
   box-sizing: border-box;
   color: #ffffff;
   cursor: pointer;
-  font-family: Inter, Helvetica, 'Apple Color Emoji', 'Segoe UI Emoji',
-    NotoColorEmoji, 'Noto Color Emoji', 'Segoe UI Symbol', 'Android Emoji',
-    EmojiSymbols, -apple-system, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue',
-    'Noto Sans', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 24px;
+  @include font;
   opacity: 1;
   outline: 0 solid transparent;
   padding: 8px 18px;
@@ -70,5 +58,135 @@ nav {
   &:hover {
     transition: 0.3s;
     scale: 1.1;
+  }
+}
+
+.btn {
+  align-items: center;
+  appearance: none;
+  background-color: #3eb2fd;
+  background-image: linear-gradient(1deg, #4f58fd, #149bf3 99%);
+  background-size: calc(100% + 20px) calc(100% + 20px);
+  border-radius: 100px;
+  border-width: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: CircularStd, sans-serif;
+  font-size: 1rem;
+  height: auto;
+  justify-content: center;
+  line-height: 1.5;
+  padding: 6px 20px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s, background-position 0.2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: top;
+  white-space: nowrap;
+  @include font;
+
+  &:active,
+  .button-21:focus {
+    outline: none;
+  }
+
+  &hover {
+    background-position: -20px -20px;
+  }
+
+  &focus:not(:active) {
+    box-shadow: rgba(255, 40, 40, 0.25) 0 0 0 0.125em;
+  }
+
+  &--remove {
+    background-color: #fd3e3e;
+    background-image: linear-gradient(1deg, #fd4f4f, #f31414 99%);
+
+    &focus:not(:active) {
+      box-shadow: rgba(255, 40, 40, 0.25) 0 0 0 0.125em;
+    }
+  }
+}
+
+.favorite-btn-container {
+  width: 30%;
+}
+
+.empty-list {
+  text-align: center;
+  @include font;
+  font-size: 24px;
+  color: #5e5df0;
+}
+
+.snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #36be00;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  @include font;
+}
+
+.snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
   }
 }

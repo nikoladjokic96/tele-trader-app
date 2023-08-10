@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom'
 
 const Home = () => {
   const { cryptoData } = useBitfinexWebSocket()
-  console.log(cryptoData)
 
   return (
     <TableContainer component={Paper}>
@@ -30,13 +29,15 @@ const Home = () => {
           {Object.values(cryptoData).map((row) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
-              <Link className="link" to={`Details/${row.name}`}>
-                {row.name}
-              </Link>
+                <Link className="link" to={`Details/${row.name}`}>
+                  {row.name}
+                </Link>
               </TableCell>
               <TableCell align="right">{row.LAST_PRICE}</TableCell>
               <TableCell align="right">{row.DAILY_CHANGE}</TableCell>
-              <TableCell align="right">{row.DAILY_CHANGE_RELATIVE.toFixed(2)}%</TableCell>
+              <TableCell align="right">
+                {row.DAILY_CHANGE_RELATIVE.toFixed(2)}%
+              </TableCell>
               <TableCell align="right">{row.HIGH}</TableCell>
               <TableCell align="right">{row.LOW}</TableCell>
             </TableRow>

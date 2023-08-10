@@ -4,7 +4,6 @@ const useFavorites = () => {
       ? JSON.parse(localStorage.getItem('favorites'))
       : []
   const setFavorites = (fav) => {
-    debugger
     localStorage.setItem('favorites', JSON.stringify(fav))
   }
 

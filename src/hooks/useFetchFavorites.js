@@ -1,56 +1,37 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 
 const pairMap = {}
 
-const useFetchPairs = () => {
-  const [pairs, setPairs] = useState([])
-  const [fetchError, setFetchError] = useState(null)
+const useFetchFavorites = () => {
+  const [cryptoData, setCryptoData] = useState({})
 
-  useEffect(() => {
-    const fetchPairs = async () => {
+  const getFavoritesFromLocalStorage = () => {
+    const favoritesStr = localStorage.getItem('favorites')
+    if (favoritesStr) {
       try {
-        const response = await axios.get('/api/v1/symbols')
-        const parsedPairs = response.data
-        const first5Pairs = parsedPairs.slice(0, 5)
-        setPairs(first5Pairs)
+        return JSON.parse(favoritesStr)
       } catch (error) {
-        setFetchError(error)
+        console.error('Error parsing favorites from localStorage:', error)
       }
     }
+    return []
+  }
 
-    fetchPairs()
-  }, [])
-
-  return { pairs, fetchError }
-}
-
-const useBitfinexWebSocket = () => {
-  const [cryptoData, setCryptoData] = useState({})
-  const { pairs, fetchError } = useFetchPairs()
+  const favorites = getFavoritesFromLocalStorage()
 
   useEffect(() => {
-    if (fetchError) {
-      console.error('Error fetching pairs:', fetchError)
-      return
-    }
-
-    if (pairs.length === 0) return
+    if (favorites.length === 0) return
 
     const bitfinexSocket = new WebSocket(import.meta.env.VITE_BITFINEX_WS)
 
     bitfinexSocket.addEventListener('open', () => {
-      const toUpper = (pair) => {
-        return pair.toUpperCase()
-      }
-      const pairsUppercase = pairs.map(toUpper)
-
-      pairsUppercase.forEach((pair) => {
+      favorites.forEach((pair) => {
+        const symbol = `t${pair.toUpperCase()}`
         bitfinexSocket.send(
           JSON.stringify({
             event: 'subscribe',
             channel: 'ticker',
-            symbol: `t${pair}`,
+            symbol: symbol,
           })
         )
       })
@@ -103,9 +84,9 @@ const useBitfinexWebSocket = () => {
     return () => {
       bitfinexSocket.close()
     }
-  }, [pairs, fetchError])
+  }, [])
 
   return { cryptoData, pairMap }
 }
 
-export default useBitfinexWebSocket
+export default useFetchFavorites

@@ -6,11 +6,12 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      // Proxy regular HTTP requests
       '/api': {
-        target: 'http://localhost:3001',
+        target: 'https://api.bitfinex.com',
         changeOrigin: true,
-        secure: false,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+        headers: {},
       },
     },
   },
